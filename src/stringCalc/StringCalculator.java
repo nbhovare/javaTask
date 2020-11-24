@@ -22,7 +22,8 @@ public class StringCalculator {
 				{										
 					sum+=Integer.valueOf(str.charAt(l))-48;
 				}					
-			}				
+			}			
+			
 		return sum;
 	}
 	
