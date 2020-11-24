@@ -9,11 +9,11 @@ public class StringCalculator {
 		if(str.length()<1)
 			return 0;
 		
-		for(int l=0;l<str.length();l++)
-		{
-			if(str.charAt(l)!=',')
-				sum+=Integer.valueOf(str.charAt(l))-48;
-		}			
+			for(int l=0;l<str.length();l++)
+			{
+				if(Character.isDigit(str.charAt(l)))
+					sum+=Integer.valueOf(str.charAt(l))-48;
+			}				
 		return sum;
 	}
 	
