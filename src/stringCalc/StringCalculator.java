@@ -3,14 +3,28 @@ import java.util.Scanner;
 
 public class StringCalculator {
 	
-	private int count=0;	
+	private static int count=0;
+	private static int cntNeg=0;
+	
 	public int GetCalledCount()
 	{		
 		return count;
 	}
-	
-	public int Add(String str)
+		
+	public int doThis(String str,int l)
 	{
+		while(Character.isDigit(str.charAt(l)) && l<str.length())
+		{
+			l++;					
+			
+			if(l>=str.length())
+				break;
+		}	
+		return l;
+	}
+
+	public int Add(String str)
+	{		
 		++count;
 		int sum=0,temp;;	
 		if(str.length()<1)
@@ -18,21 +32,22 @@ public class StringCalculator {
 		
 		for(int l=0;l<str.length();l++)
 		{
-			if(Character.isDigit(str.charAt(l)))
+			if(str.charAt(l)=='-' && l<str.length())
+			{
+				++l;							
+				l=doThis(str,l);		
+				++cntNeg;
+			}
+			
+			else if(Character.isDigit(str.charAt(l)))
 			{
 				if(l>=str.length())
-					break;
+					break;							
 				
 				if(Character.isDigit(str.charAt(l+1)))
 				{
 					temp=l;				
-					while(Character.isDigit(str.charAt(l)) && l<str.length())
-					{
-						l++;
-						
-						if(l>=str.length())
-							break;
-					}						
+					l=doThis(str,l);						
 					
 					if(!(Integer.valueOf(str.substring(temp, l))>1000))
 						sum+=Integer.valueOf(str.substring(temp, l));
@@ -44,8 +59,7 @@ public class StringCalculator {
 		}
 		
 		return sum;
-	}
-	
+	}	
 	
 	public static void main(String[] args) {
 		
@@ -56,8 +70,8 @@ public class StringCalculator {
 		StringCalculator sc=new StringCalculator ();		
 		System.out.println("Sum = "+sc.Add(str));
 		System.out.println("Numbers of times Add method was called = "+sc.GetCalledCount());
+		System.out.println("Number of Negative Numbers Ignored = "+cntNeg);
 		s.close();
 		
 	}
-
 }
